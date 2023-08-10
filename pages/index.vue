@@ -55,6 +55,10 @@
                     </v-card-actions>
                 </v-card>
                 <v-list :max-height="300" class="overflow-auto">
+                    <v-list-item v-if="list.length == 0">
+                        <v-card class="w-100" text="Without tasks!">
+                        </v-card>
+                    </v-list-item>
                     <v-list-item v-for="item in list">
                         <v-card class="w-100 d-flex justify-space-between align-center" :class="{'text-grey-lighten-1': item.isDone}">
                             <v-card-text :class="{'text-decoration-line-through': item.isDone}" class="pt-0">
