@@ -1,9 +1,10 @@
 <script setup>
-    import { ref, reactive } from 'vue'
-
     const menu = ref(false);
     const newTask = ref("");
     const list = reactive([]);
+    const rules = reactive({
+        required: value => !!value || 'Required.',
+    })
     
     function cancel() {
         menu.value = false;
@@ -11,10 +12,10 @@
     }
 
     function addNew () {
-        if(newTask.value.length > 0){
+        if(newTask.value.length > 0) {
             list.push({task: newTask.value, isDone: false});
+            cancel();
         }
-        cancel();
     }
 </script>
 
@@ -32,7 +33,14 @@
                             <v-card :min-width="300">
                                 <v-list>
                                     <v-list-item>
-                                        <v-text-field v-model="newTask" label="Task" variant="outlined" class="mt-2" placeholder="Do laundry"/>
+                                        <v-text-field
+                                            v-model="newTask"
+                                            label="Task"
+                                            variant="outlined"
+                                            class="mt-2"
+                                            :rules="[rules.required]"
+                                            placeholder="Do laundry"
+                                        />
                                     </v-list-item>
                                 </v-list>
 
