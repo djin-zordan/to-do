@@ -1,9 +1,22 @@
-<script setup>
-    const menu = ref(false);
-    const newTask = ref("");
-    const list = reactive([]);
-    const rules = reactive({
-        required: value => !!value || 'Required.',
+<script setup lang="ts">
+    interface Task {
+        task: string,
+        isDone: boolean
+    }
+    
+    const menu: Ref<boolean> = ref(false);
+    const newTask: Ref<string> = ref("");
+    const list: Array<Task> = reactive([]);
+    const rules = ({
+        size: (value: string) => {
+            if (value.length === 0) {
+                return "Required";
+            } else if(value.length > 50) {
+                return "Task must have less than 50 chars";
+            } else {
+                return true;
+            }
+        }
     })
     
     function cancel() {
@@ -12,7 +25,7 @@
     }
 
     function addNew () {
-        if(newTask.value.length > 0) {
+        if(newTask.value.length > 0 && newTask.value.length <= 50) {
             list.push({task: newTask.value, isDone: false});
             cancel();
         }
@@ -38,7 +51,7 @@
                                             label="Task"
                                             variant="outlined"
                                             class="mt-2"
-                                            :rules="[rules.required]"
+                                            :rules="[rules.size]"
                                             placeholder="Do laundry"
                                         />
                                     </v-list-item>
