@@ -1,5 +1,8 @@
 <template>
   <div>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+      <ui-snackbar/>
+    </NuxtLayout>
   </div>
 </template>
